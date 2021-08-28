@@ -1,12 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import UserDetails from './Components/UserDetails/UserDetails';
+import FirstQuestionnaire from './Components/FirstQuestionnaire/FirstQuestionnaire';
+import SecondQuestionnaire from './Components/SecondQuestionnaire/SecondQuestionnaire';
+import ThirdQuestionnaire from './Components/ThirdQuestionnaire/ThirdQuestionnaire';
+import Goodbye from './Components/Goodbye/Goodbye';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+        <Switch>
+          <Route exact path="/" component={UserDetails}/>
+          <Route exact path="/FirstQuestionnaire" component={FirstQuestionnaire}/>
+          <Route exact path="/SecondQuestionnaire" component={SecondQuestionnaire}/>
+          <Route exact path="/ThirdQuestionnaire" component={ThirdQuestionnaire}/>
+          <Route exact path="/Goodbye" component={Goodbye}/>
+        </Switch>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
