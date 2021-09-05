@@ -12,16 +12,20 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import PageNotFound from './Components/PageNotFound/PageNotFound'
+import Registration from './Components/Registration/Registration';
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
         <Switch>
-          <Route exact path="/" component={UserDetails}/>
+          <Route exact path="/:id" component={UserDetails}/>
           <Route exact path="/FirstQuestionnaire" component={FirstQuestionnaire}/>
           <Route exact path="/SecondQuestionnaire" component={SecondQuestionnaire}/>
           <Route exact path="/ThirdQuestionnaire" component={ThirdQuestionnaire}/>
           <Route exact path="/Goodbye" component={Goodbye}/>
+          <Route exact path="/" component={Registration}/>
+          <Route component={PageNotFound}/>
         </Switch>
     </Router>
   </React.StrictMode>,

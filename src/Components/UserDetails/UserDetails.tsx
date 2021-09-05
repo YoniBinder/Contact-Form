@@ -1,22 +1,54 @@
-import * as React from 'react';
+import { useState,useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './UserDetails.css';
+import { db} from "../../config/firebase";
+import {ref,child,get } from "firebase/database"
 
 export interface UserDetailsProps {
-
+    match:any;
+    params:any;
 }
 
 export default function UserDetails (props: UserDetailsProps) {
-
+    const data={
+        fullName: "",
+        phone:"",
+        email: "",
+    }
+    const [inputs,setInputs]=useState(data)
     let history =useHistory()
+    
+    useEffect(()=>{
+        get(child(ref(db),props.match.params.id)).then((snapshot) => {
+            if (snapshot.exists()) {
+                console.log(snapshot.val());
+                let data=snapshot.val()
+            } else {
+                history.push("/");        
+            }
+          }).catch((error) => {
+            console.error(error);
+          });
 
-    function toFirstQuestionnaire(e:React.SyntheticEvent){
-        e.preventDefault();
-        console.log('You clicked first submit.');
+    },[props])
+    
+    
+
+    function handleChange(event:React.ChangeEvent<HTMLInputElement>){
+   
+        const {name,value}=event.target
+        setInputs(prev=>({...prev,[name]:value}))
+    } 
+    function toFirstQuestionnaire(event:React.SyntheticEvent){
+   
+        event.preventDefault();
+        let userDetails = JSON.stringify(inputs);
+        console.log(userDetails);
         history.push("/FirstQuestionnaire");
     }
-
+    
   return (
+     
     <div>
         <form onSubmit={toFirstQuestionnaire}>
             <h1>להנות כהורה ולהעביר את זה הלאה - מרכז שפר</h1>
@@ -29,14 +61,14 @@ export default function UserDetails (props: UserDetailsProps) {
                 <br/>
                    לייעוץ והרשמה לקורס הכשרת המנחים הקרוב:
             </h3>
-            <label>שם ושם משפחה</label>
-            <input name="fullName"/>
+                <label htmlFor="InputName">שם ושם משפחה *</label>
+                <input id="InputName" name="fullName" onChange={(event)=>handleChange(event)} placeholder="שם פרטי ומשפחה" type="text" aria-describedby="userDescription" required/>
             <br/>
-            <label>טלפון</label>
-            <input name="phone"/>
+            <label htmlFor="InputPhone">טלפון *</label>
+                <input id="InputPhone" name="phone" onChange={(event)=>handleChange(event)} placeholder="טלפון" type="text" aria-describedby="userDescription" required/>
             <br/>
-            <label>אימייל</label>
-            <input name="email"/>
+            <label htmlFor="InputEmail">אי-מייל *</label>
+                <input id="InputEmail" name="email" onChange={(event)=>handleChange(event)} placeholder="אימייל" type="text" aria-describedby="userDescription" required/>
             <br/>
             <button type="submit">שליחה</button>
         </form>
