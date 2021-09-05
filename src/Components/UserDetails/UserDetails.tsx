@@ -22,7 +22,6 @@ export default function UserDetails (props: UserDetailsProps) {
         get(child(ref(db),props.match.params.id)).then((snapshot) => {
             if (snapshot.exists()) {
                 console.log(snapshot.val());
-                let data=snapshot.val()
             } else {
                 history.push("/");        
             }
@@ -30,7 +29,7 @@ export default function UserDetails (props: UserDetailsProps) {
             console.error(error);
           });
 
-    },[props])
+    })
     
     
 
