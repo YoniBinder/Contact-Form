@@ -1,34 +1,32 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import reportWebVitals from './reportWebVitals';
-import UserDetails from './Components/UserDetails/UserDetails';
-import FirstQuestionnaire from './Components/FirstQuestionnaire/FirstQuestionnaire';
-import SecondQuestionnaire from './Components/SecondQuestionnaire/SecondQuestionnaire';
-import ThirdQuestionnaire from './Components/ThirdQuestionnaire/ThirdQuestionnaire';
-import Goodbye from './Components/Goodbye/Goodbye';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
+import reportWebVitals from './reportWebVitals';
+import UserSubject from './Components/UserSubject/UserSubject';
+import MultipleAnswersForm from './Components/MultipleAnswersForm/MultipleAnswersForm';
+import ContactDetailsForm from './Components/ContactDetailsForm/ContactDetailsForm';
+import ThankYou from './Components/ThankYou/ThankYou';
 import PageNotFound from './Components/PageNotFound/PageNotFound'
 import Registration from './Components/Registration/Registration';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <>
     <Router>
         <Switch>
-          <Route exact path="/:id" component={UserDetails}/>
-          <Route exact path="/FirstQuestionnaire" component={FirstQuestionnaire}/>
-          <Route exact path="/SecondQuestionnaire" component={SecondQuestionnaire}/>
-          <Route exact path="/ThirdQuestionnaire" component={ThirdQuestionnaire}/>
-          <Route exact path="/Goodbye" component={Goodbye}/>
-          <Route exact path="/" component={Registration}/>
+          <Route exact path="/:id" component={UserSubject}/>
+          <Route exact path="/Registration" component={Registration}/>
+          <Route path="/:id/MultipleAnswersForm" component={MultipleAnswersForm}/>
+          <Route path="/:id/ContactDetailsForm" component={ContactDetailsForm}/>
+          <Route exact path="/ThankYou" component={ThankYou}/>
           <Route component={PageNotFound}/>
         </Switch>
     </Router>
-  </React.StrictMode>,
+
+  </>,
   document.getElementById('root')
 );
 

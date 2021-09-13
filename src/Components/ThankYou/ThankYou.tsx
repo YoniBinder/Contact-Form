@@ -8,7 +8,7 @@ export default function UserDetails (props: UserDetailsProps) {
 
   return (
     <div>
-            <h1>Goodbye</h1>
+            <h1>Thank You!</h1>
     </div>
   );
 }
