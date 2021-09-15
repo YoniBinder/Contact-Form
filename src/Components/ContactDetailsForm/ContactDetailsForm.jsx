@@ -5,8 +5,8 @@ export default function ContactDetailsForm (props) {
 
     let history =useHistory()
     let apiData=props.location.state.apiData
-    let eventNumber=props.location.state.nextEvent;
-    let apiContent=apiData.events[eventNumber].content
+    let currentEventNumber=props.location.state.nextEvent;
+    let apiContent=apiData.events[currentEventNumber].content
 
   //   const data={
   //     fullName: "",
@@ -19,6 +19,15 @@ export default function ContactDetailsForm (props) {
     // const {name,value}=event.target
     // setInputs(prev=>({...prev,[name]:value}))
     // } 
+
+    function checkEventNumber(){
+      if(!apiData.events[currentEventNumber+1].dependencies[0].availability.eventEndIdx)
+        return currentEventNumber+1;
+      for(let i=0;i<apiData.events[currentEventNumber+1].dependencies.length;i++)
+        if(apiData.events[currentEventNumber]._id===apiData.events[currentEventNumber+1].dependencies[i].availability.afterEvents[0])
+          return currentEventNumber+1;
+      return currentEventNumber+2
+    } 
 
     function isFormOrMUltipleAnswers(nextEvent){
       if(apiData.events[nextEvent].content.form){
@@ -46,7 +55,8 @@ export default function ContactDetailsForm (props) {
     function toNextSlide(event){
       event.preventDefault();
       // console.log(inputs)
-      isFormOrMUltipleAnswers(eventNumber+1)
+      const nextEventNumber=checkEventNumber()
+      isFormOrMUltipleAnswers(nextEventNumber)
    }
     
 

@@ -17,7 +17,7 @@ export default function UserSubject (props) {
     const [apiData,setApiData]=useState(null)
     
     let history =useHistory()
-
+    let actionNumber=0
     useEffect(()=>{
         get(child(ref(db),props.match.params.id)).then((snapshot) => {
             if (snapshot.exists()) {
@@ -32,16 +32,16 @@ export default function UserSubject (props) {
     },[history,props.match.params.id])
     
     function isFormOrMUltipleAnswers(userChoice,nextEvent){
-      if(apiData.paths[userChoice].events[nextEvent].content.form){
-          history.push({
-          pathname:`${props.match.params.id}/ContactDetailsForm`,
-          state: { 
-            apiData: apiData.paths[userChoice],
-            nextEvent:nextEvent
-          }
-        })
-      }
-      else
+      // if(apiData.paths[userChoice].events[nextEvent].content.form){
+      //     history.push({
+      //     pathname:`${props.match.params.id}/ContactDetailsForm`,
+      //     state: { 
+      //       apiData: apiData.paths[userChoice],
+      //       nextEvent:nextEvent
+      //     }
+      //   })
+      // }
+      // else
       history.push({
         pathname:`${props.match.params.id}/MultipleAnswersForm`,
         state: { 
@@ -54,11 +54,11 @@ export default function UserSubject (props) {
 
    function toNextSlide(event){
       event.preventDefault();
-      if(event.target.id==="ייעוץ פרטני")
+      if(Number(event.target.id)===apiData.paths[2].events[0].dependencies[0].availability.eventEndIdx)
         isFormOrMUltipleAnswers(2,0)    
-      else if(event.target.id==="סדנת הורים")
+      else if(Number(event.target.id)===apiData.paths[1].events[0].dependencies[0].availability.eventEndIdx)
         isFormOrMUltipleAnswers(1,0) 
-      else if(event.target.id==="הכשרה")
+      else if(Number(event.target.id)===apiData.paths[0].events[1].dependencies[0].availability.eventEndIdx)
         isFormOrMUltipleAnswers(0,1)
 
    }
@@ -69,7 +69,7 @@ export default function UserSubject (props) {
         {apiData&& <h1>{apiData.paths[0].events[0].title}</h1>}
         {apiData&& 
           apiData.paths[0].events[0].content.actions.map((action)=>
-          <button className="btn btn-info btn-lg me-3" id={action.end} key={action.end} onClick={(event)=>toNextSlide(event)}> {action.label}</button>
+          <button className="btn btn-info btn-lg me-3" id={actionNumber++} key={action.end} onClick={(event)=>toNextSlide(event)}> {action.label}</button>
           )}
 
     </div>

@@ -9,7 +9,6 @@ import reportWebVitals from './reportWebVitals';
 import UserSubject from './Components/UserSubject/UserSubject';
 import MultipleAnswersForm from './Components/MultipleAnswersForm/MultipleAnswersForm';
 import ContactDetailsForm from './Components/ContactDetailsForm/ContactDetailsForm';
-import ThankYou from './Components/ThankYou/ThankYou';
 import PageNotFound from './Components/PageNotFound/PageNotFound'
 import Registration from './Components/Registration/Registration';
 
@@ -21,7 +20,6 @@ ReactDOM.render(
           <Route exact path="/Registration" component={Registration}/>
           <Route path="/:id/MultipleAnswersForm" component={MultipleAnswersForm}/>
           <Route path="/:id/ContactDetailsForm" component={ContactDetailsForm}/>
-          <Route exact path="/ThankYou" component={ThankYou}/>
           <Route component={PageNotFound}/>
         </Switch>
     </Router>
