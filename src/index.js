@@ -8,8 +8,6 @@ import {
 import reportWebVitals from './reportWebVitals';
 import UserSubject from './Components/UserSubject/UserSubject';
 import MultipleAnswersForm from './Components/MultipleAnswersForm/MultipleAnswersForm';
-import ContactDetailsForm from './Components/ContactDetailsForm/ContactDetailsForm';
-import PageNotFound from './Components/PageNotFound/PageNotFound'
 import Registration from './Components/Registration/Registration';
 
 ReactDOM.render(
@@ -17,10 +15,8 @@ ReactDOM.render(
     <Router>
         <Switch>
           <Route exact path="/:id" component={UserSubject}/>
-          <Route exact path="/Registration" component={Registration}/>
+          <Route exact path="/:id/Registration" component={Registration}/>
           <Route path="/:id/MultipleAnswersForm" component={MultipleAnswersForm}/>
-          <Route path="/:id/ContactDetailsForm" component={ContactDetailsForm}/>
-          <Route component={PageNotFound}/>
         </Switch>
     </Router>
 

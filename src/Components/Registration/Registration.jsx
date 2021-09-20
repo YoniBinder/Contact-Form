@@ -1,9 +1,6 @@
-import * as React from 'react';
 
-export interface IRegistrationProps {
-}
 
-export default function Registration (props: IRegistrationProps) {
+export default function Registration () {
   return (
     <div>
       <h1>היי, במידה ותרצה להירשם לשירות, נא לחץ להרשמה</h1>

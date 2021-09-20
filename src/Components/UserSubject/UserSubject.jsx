@@ -24,7 +24,7 @@ export default function UserSubject (props) {
                 setApiData(snapshot.val())
             }
             else
-                history.push("/Registration")
+                history.push(`${props.match.params.id}/Registration`)
           }).catch((error) => {
             console.error(error);
           });
@@ -32,16 +32,6 @@ export default function UserSubject (props) {
     },[history,props.match.params.id])
     
     function isFormOrMUltipleAnswers(userChoice,nextEvent){
-      // if(apiData.paths[userChoice].events[nextEvent].content.form){
-      //     history.push({
-      //     pathname:`${props.match.params.id}/ContactDetailsForm`,
-      //     state: { 
-      //       apiData: apiData.paths[userChoice],
-      //       nextEvent:nextEvent
-      //     }
-      //   })
-      // }
-      // else
       history.push({
         pathname:`${props.match.params.id}/MultipleAnswersForm`,
         state: { 

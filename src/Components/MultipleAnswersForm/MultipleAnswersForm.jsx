@@ -1,21 +1,15 @@
-import { useHistory } from 'react-router-dom';
 
+import { useState } from 'react';
 export default function MultipleAnswersForm (props) {
 
-      let history =useHistory()
+      let [currentEventNumber,setCurrentEventNumber]=useState(props.location.state.nextEvent)
+      
       let apiData=props.location.state.apiData
-      let currentEventNumber=props.location.state.nextEvent
       let apiContent=apiData.events[currentEventNumber].content
       let actionNumber=0
 
-      function isFormOrMUltipleAnswers(nextEvent){
-        history.push({
-          pathname:`MultipleAnswersForm`,
-          state: { 
-            apiData: apiData,
-            nextEvent:nextEvent
-          }
-        })   
+      function updateEventNumber(nextEvent){
+        setCurrentEventNumber(nextEvent) 
       }
 
       function getNextEventNumber(action){
@@ -39,7 +33,7 @@ export default function MultipleAnswersForm (props) {
       event.preventDefault();
       let action=event.target.id
       const nextEventNumber=getNextEventNumber(action)
-      isFormOrMUltipleAnswers(nextEventNumber)
+      updateEventNumber(nextEventNumber)
    }
 
 
@@ -56,6 +50,7 @@ export default function MultipleAnswersForm (props) {
               <br/>
             </div>
             )}
+
             {apiContent.actions.map((action)=>
             <div key={action.end}>
               {action.link?
@@ -63,8 +58,7 @@ export default function MultipleAnswersForm (props) {
               :
               <button className="btn btn-info btn-lg mb-3" id={actionNumber++} onClick={(event)=>toNextSlide(event)}> {action.label}</button>
               }
-              
-              <br/>
+
             </div>
             )}
         {/* </form> */}
