@@ -55,7 +55,7 @@ export default function MultipleAnswersForm (props) {
             {apiContent.actions.map((action)=>
             <div key={action.end}>
               {action.link?
-              <a href={`${action.link}`} className="btn btn-info btn-lg mb-3" target="_PARENT"> {action.label}</a>
+              <a href={`${action.link}`} className="btn btn-info btn-lg mb-3" target="_top"> {action.label}</a>
               :
               <button className="btn btn-info btn-lg mb-3" id={actionNumber++} onClick={(event)=>toNextSlide(event)}> {action.label}</button>
               }
