@@ -25,6 +25,7 @@ export default function UserSubject (props) {
         get(child(ref(db),props.match.params.id)).then((snapshot) => {
             if (snapshot.exists()) {
                 setApiData(snapshot.val())
+                setApiColors(apiData.colors)
             }
             else
                 history.push(`${props.match.params.id}/Registration`)
@@ -32,7 +33,7 @@ export default function UserSubject (props) {
             console.error(error);
           });
           
-    },[history,props.match.params.id])
+    },[history,props.match.params.id,apiData])
     
     function isFormOrMUltipleAnswers(userChoice,nextEvent){
       history.push({
