@@ -15,23 +15,24 @@ export default function MultipleAnswersForm (props) {
       function getNextEventNumber(action){
         if(typeof(apiData.events[currentEventNumber+1].dependencies[0].availability.eventEndIdx)==="undefined")
           return currentEventNumber+1;
-
-        for(let i=0;i<apiData.events[currentEventNumber+1].dependencies.length;i++){
-          if(apiData.events[currentEventNumber]._id===apiData.events[currentEventNumber+1].dependencies[i].availability.afterEvents[0]
-            && Number(action)=== apiData.events[currentEventNumber+1].dependencies[i].availability.eventEndIdx)
-            return currentEventNumber+1;
-          if(apiData.events[currentEventNumber]._id===apiData.events[currentEventNumber+1].dependencies[i].availability.afterEvents[0]
-            && apiContent.type===2)
-            return currentEventNumber+1;
+        const staticNumber=currentEventNumber
+        while(true){
+          for(let i=0;i<apiData.events[currentEventNumber+1].dependencies.length;i++){
+            if(apiData.events[staticNumber]._id===apiData.events[currentEventNumber+1].dependencies[i].availability.afterEvents[0]
+              && Number(action)=== apiData.events[currentEventNumber+1].dependencies[i].availability.eventEndIdx)
+              return currentEventNumber+1;
+            if(apiData.events[staticNumber]._id===apiData.events[currentEventNumber+1].dependencies[i].availability.afterEvents[0]
+              && apiData.events[staticNumber].content.type===2)
+              return currentEventNumber+1;
+          }
+          currentEventNumber++;
         }
-          
-        
-        return currentEventNumber+2
       } 
 
     function toNextSlide(event){
       event.preventDefault();
       let action=event.target.id
+      console.log(action)
       const nextEventNumber=getNextEventNumber(action)
       updateEventNumber(nextEventNumber)
    }
@@ -54,7 +55,7 @@ export default function MultipleAnswersForm (props) {
             {apiContent.actions.map((action)=>
             <div key={action.end}>
               {action.link?
-              <a href={`${action.link}`} className="btn btn-info btn-lg mb-3" id={actionNumber++}> {action.label}</a>
+              <a href={`${action.link}`} className="btn btn-info btn-lg mb-3" target="_PARENT"> {action.label}</a>
               :
               <button className="btn btn-info btn-lg mb-3" id={actionNumber++} onClick={(event)=>toNextSlide(event)}> {action.label}</button>
               }

@@ -17,6 +17,7 @@ ReactDOM.render(
           <Route exact path="/:id" component={UserSubject}/>
           <Route exact path="/:id/Registration" component={Registration}/>
           <Route path="/:id/MultipleAnswersForm" component={MultipleAnswersForm}/>
+          <Route component={Registration}/>
         </Switch>
     </Router>
 
