@@ -1,5 +1,9 @@
 @import './../../vars.scss';
 
+.test{
+    height:100px
+}
+
 .event-modal {
     border-radius: 40px !important;
     .MuiBackdrop-root {
@@ -563,7 +567,14 @@
         //     }
         // }
     }
-
+    .MuiInputBase-input{
+        color: rgb(255, 255, 255); 
+        font-weight: 600;
+         text-align: center;
+          z-index: 2; 
+          height: 45px; 
+          padding: 0px; 
+    }
     .actions-non-sales-container {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;

@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import UserSubject from './Components/UserSubject/UserSubject';
-import MultipleAnswersForm from './Components/MultipleAnswersForm/MultipleAnswersForm';
+import Questionaire from './Components/Questionaire/Questionaire';
 import Registration from './Components/Registration/Registration';
 
 ReactDOM.render(
@@ -16,7 +16,7 @@ ReactDOM.render(
         <Switch>
           <Route exact path="/:id" component={UserSubject}/>
           <Route exact path="/:id/Registration" component={Registration}/>
-          <Route path="/:id/MultipleAnswersForm" component={MultipleAnswersForm}/>
+          <Route path="/:id/Questionaire" component={Questionaire}/>
           <Route component={Registration}/>
         </Switch>
     </Router>
