@@ -154,7 +154,7 @@ export default function Questionaire(props) {
                           href={`${action.link}`}
                           type="button"
                           className="MuiButtonBase-root MuiButton-root MuiButton-contained action-button false MuiButton-containedSizeLarge MuiButton-sizeLarge"
-                          target="_top"
+                          target="_PARENT"
                           tabIndex="0"
                           style={{color:apiContent.type===0?apiColors.main:apiColors.background,
                             backgroundColor:apiContent.type===0?apiColors.background:apiColors.main,
