@@ -277,14 +277,14 @@
         color: #000000;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        margin: 0 auto;
         p {
             align-self: flex-start;
-            text-align: left;
+            text-align: center;
         }
 
         @include phone {
-            text-align: left;
+            // text-align: left;
             margin-top: 0px;
             width: 85vw;
         }
@@ -300,13 +300,13 @@
             font-size: 36px;
             width: 75%;
             display: block !important;
-            text-align: left;
-            margin-bottom: 5px;
-            margin-inline-start: 5px;
-
+            // text-align: left;
+            // margin-bottom: 5px;
+            // margin-inline-start: 5px;
+            margin:0 auto;
             @include phone {
                 width: 100%;
-                text-align: left;
+                // text-align: left;
                 font-size: 30px;
                 margin: 10px 9px;
                 padding: 0px 0px 0px 0px;
@@ -385,7 +385,7 @@
         }
     }
     .rtl-heading {
-        padding-right: 10px;
+        // padding-right: 10px;
         @include phone{
             margin-top: 0px !important;
         }
@@ -393,11 +393,11 @@
             width: 80% !important;
             align-self: flex-start;
             padding-right: 0px !important;
-            text-align: right !important;
+            text-align: center !important;
             @include phone{
                 width: 100% !important;
                 align-self: flex-start;
-                text-align: right !important;
+                text-align: center !important;
                 padding-right: 0px !important;
             }
         }
@@ -427,11 +427,10 @@
     }
 
     .actions-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        // display: flex;
+        // grid-template-columns: 1fr 1fr 1fr;
         padding: 8px 16px 10px;
         min-width: 500px;
-
         @include phone {
             display: flex;
             justify-content: center;
@@ -482,7 +481,7 @@
     }
 
     .textFeild {
-        width: 60%;
+        // width: 60%;
         height: 65px;
         @include phone {
             width: 100%;
@@ -574,6 +573,7 @@
           z-index: 2; 
           height: 45px; 
           padding: 0px; 
+          
     }
     .actions-non-sales-container {
         display: grid;
