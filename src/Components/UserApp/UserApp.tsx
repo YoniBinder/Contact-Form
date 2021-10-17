@@ -260,22 +260,6 @@ export default function UserApp(props:FormComponentProps) {
                   ].content.actions.map((action:Action) => (
                     <div key={action.end}>
                       {action.link ? (
-                        // <a
-                        //   href={`${action.link}`}
-                        //   type="button"
-                        //   className="action-button"
-                        //   target="_PARENT"
-                       
-                        //   tabIndex={0}
-                        //   style={{
-                        //     color:apiColors.main,
-                              
-                        //     backgroundColor:
-                        //       apiData.colors.buttonBackground
-                        //         ? apiColors.buttonBackground
-                        //         : apiColors.background,
-                        //   }}
-                        // >
                           <button
                             tabIndex={0}
                             className="action-button"
@@ -324,8 +308,8 @@ export default function UserApp(props:FormComponentProps) {
         </div>
       </div>
 
-      <br/><br/><br/><br/><br/><br/>
-      <iframe src="http://localhost:3000/01849380-cbad-442e-96bb-a5527709529b" title="yoni" width="500" height="450"></iframe>
+      {/* <br/><br/><br/><br/><br/><br/>
+      <iframe src="http://localhost:3000/01849380-cbad-442e-96bb-a5527709529b" title="yoni" width="500" height="450"></iframe> */}
 
 
     </div>
