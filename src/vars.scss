@@ -3,7 +3,7 @@ $tablet-width: 768px;
 $desktop-width: 1024px;
 
 @mixin phone {
-  @media (max-width: #{$tablet-width - 1px}) {
+  @media (max-width: #{$phone-width - 1px}) {
     @content;
   }
 }

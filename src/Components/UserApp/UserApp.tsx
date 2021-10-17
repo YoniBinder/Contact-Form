@@ -1,28 +1,82 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import "./UserSubject.scss";
+import "./UserApp.scss";
 import { db } from "../../config/firebase";
 import { onSnapshot, doc } from "@firebase/firestore";
+import {Helmet} from 'react-helmet';
 
-export default function UserSubject(props) {
+interface FormComponentProps {
+  match:Match
+}
+type Params ={
+  id: string
+}
+type Match={
+  params:Params
+}
+type Colors={
+  main:string,
+  title: string,
+  background?:string,
+  description: string,
+  buttons?: string,
+  buttonBackground?:string
+}
+type Form={
+  key:string;
+  type:string;
+  required:boolean
+}
+type Action={
+  label:string; 
+  type:number;
+  end?:string;
+  link?:string;
+}
+
+type Content={
+  actions :Array<Action>;
+  form:Array<Form>;
+  type:number;
+  message:string;
+}
+type Availability={
+  eventEndIdx:number;
+  afterEvents:Array<string>
+}
+type Events={
+  _id:string;
+  content:Content;
+  dependencies:Array<{availability:Availability}>;
+  title:string
+}
+type ApiData={
+  paths:Array<{events:Array<Events>;_id:string;}>;
+  colors:Colors;
+  title:string;
+  _id:string;
+}
+
+export default function UserApp(props:FormComponentProps) {
+
   const defaultColors = {
     main: "#44a785",
     title: "#ffffff",
     background: "#ffffff",
     description: "#000000",
-    buttons: "#d40000",
+    buttonBackground: "#ffffff",
   };
 
-  const [apiData, setApiData] = useState(null);
-  let [currentPath, setCurrentPath] = useState(0);
-  let [currentEvent, setCurrentEvent] = useState(0);
-  let [apiColors, setApiColors] = useState(defaultColors);
+  const [apiData, setApiData] = useState< ApiData|null>(null);
+  let [currentPath, setCurrentPath] = useState<number>(0);
+  let [currentEvent, setCurrentEvent] = useState<number>(0);
+  let [apiColors, setApiColors] = useState<Colors>(defaultColors);
 
   let history = useHistory();
-  let actionNumber = 0;
+  let actionNumber:number = 0;
 
-  useEffect(() => {
-    onSnapshot(doc(db, "planz", props.match.params.id), (doc) => {
+  useEffect(():void => {
+    onSnapshot(doc(db, "planz", props.match.params.id), (doc:any) => {
       if (doc.exists()) {
         setApiData(doc.data());
         setApiColors({
@@ -33,20 +87,19 @@ export default function UserSubject(props) {
       } else history.push(`${props.match.params.id}/Registration`);
     });
 
-    return {};
   }, [history, props.match.params.id, apiData]);
 
-  function goToPath(action) {
+  function goToPath(action:string) {
     let nextPath = currentPath;
     let nextEvent = 1;
 
-    for (let i = 0; i < apiData.paths.length; i++) {
+    for (let i = 0; i < apiData!.paths.length; i++) {
       if (
-        apiData.paths[currentPath].events[currentEvent]._id ===
-          apiData.paths[nextPath].events[nextEvent].dependencies[0].availability
+        apiData!.paths[currentPath].events[currentEvent]._id ===
+          apiData!.paths[nextPath].events[nextEvent].dependencies[0].availability
             .afterEvents[0] &&
         Number(action) ===
-          apiData.paths[nextPath].events[nextEvent].dependencies[0].availability
+          apiData!.paths[nextPath].events[nextEvent].dependencies[0].availability
             .eventEndIdx
       ) {
         setCurrentPath(nextPath);
@@ -59,10 +112,10 @@ export default function UserSubject(props) {
     }
   }
 
-  function goToNextEvent(action) {
+  function goToNextEvent(action:string) {
     let nextEvent = currentEvent + 1;
     if (
-      typeof apiData.paths[currentPath].events[nextEvent].dependencies[0]
+      typeof apiData!.paths[currentPath].events[nextEvent].dependencies[0]
         .availability.eventEndIdx === "undefined"
     )
       setCurrentEvent(nextEvent);
@@ -70,15 +123,15 @@ export default function UserSubject(props) {
     while (true) {
       for (
         let i = 0;
-        i < apiData.paths[currentPath].events[nextEvent].dependencies.length;
+        i < apiData!.paths[currentPath].events[nextEvent].dependencies.length;
         i++
       ) {
         if (
-          apiData.paths[currentPath].events[currentEvent]._id ===
-            apiData.paths[currentPath].events[nextEvent].dependencies[i]
+          apiData!.paths[currentPath].events[currentEvent]._id ===
+            apiData!.paths[currentPath].events[nextEvent].dependencies[i]
               .availability.afterEvents[0] &&
           Number(action) ===
-            apiData.paths[currentPath].events[nextEvent].dependencies[i]
+            apiData!.paths[currentPath].events[nextEvent].dependencies[i]
               .availability.eventEndIdx
         ) {
           setCurrentEvent(nextEvent);
@@ -90,20 +143,9 @@ export default function UserSubject(props) {
     }
   }
 
-  // function goToCategory(userChoice, nextEvent) {
-  //   history.push({
-  //     pathname: `${props.match.params.id}/Questionaire`,
-  //     state: {
-  //       apiData: apiData,
-  //       nextEvent: nextEvent,
-  //       userChoice:userChoice,
-  //       apiColors:apiColors
-  //     },
-  //   });
-  // }
   function checkIfFirstEvent() {
     if (
-      typeof apiData.paths[currentPath].events[currentEvent].dependencies[0]
+      typeof apiData!.paths[currentPath].events[currentEvent].dependencies[0]
         .availability.afterEvents === "undefined"
     )
       return true;
@@ -111,14 +153,14 @@ export default function UserSubject(props) {
   }
 
   function checkIfForm() {
-    if (apiData.paths[currentPath].events[currentEvent].content.type === 2)
+    if (apiData!.paths[currentPath].events[currentEvent].content.type === 2)
       return true;
     return false;
   }
 
-  function toNextSlide(event) {
+  function toNextSlide(event:React.MouseEvent<HTMLButtonElement>):void {
     event.preventDefault();
-    let action = event.target.id;
+    let action = (event.target as HTMLButtonElement).id;
 
     if (checkIfForm()) setCurrentEvent(currentEvent + 1);
     else if (checkIfFirstEvent()) goToPath(action);
@@ -127,12 +169,15 @@ export default function UserSubject(props) {
 
   return (
     <div>
-      <div className="MuiDialog-root event-modal" dir="rtl">
-        <div className="MuiDialog-container MuiDialog-scrollPaper">
+      <Helmet>
+                <style>{`body { background-color:  ${apiColors.background}; }`}</style>
+            </Helmet>
+      <div className="event-modal" dir="rtl">
+      
+        <div>
           <div
             className="MuiPaper-root MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm MuiPaper-elevation24 MuiPaper-rounded"
             aria-labelledby="customized-dialog-title"
-            style={{ backgroundColor: apiColors.background }}
           >
             {/* <div className="dialog-heading-cont sales-event-name rtl-cont"> */}
             {/* <div className="logo-container rtl-logo-container" style={{backgroundColor:apiColors.main}}>
@@ -148,36 +193,41 @@ export default function UserSubject(props) {
                 </p>
               </div> */}
             {/* </div> */}
-            <div className="content rtl-heading">
+            <div 
+            className="content rtl-heading"
+            >
+
               <p
-                className="MuiTypography-root heading rtl-heading-text MuiTypography-body1"
+                className="heading"
                 style={{ color: apiColors.main }}
-              >
-                {apiData &&
+              >{apiData &&
                   apiData.paths[currentPath].events[currentEvent].title}
               </p>
-              {/* <span className="content-message rtl-content-message" style={{color:apiColors.description}}>
+              <span className="content-message rtl-content-message" style={{color:apiColors.description}}>
                 <p className="MuiTypography-root text-inline MuiTypography-body1">
                 { apiData && apiData.paths[currentPath].events[currentEvent].content.message}
                 </p>
-              </span> */}
+              </span>
             </div>
 
             <form className="jss21">
+            
               <div className="jss22">
+              
                 <div className="form-cont rtl-form">
+                
                   {apiData &&
                     apiData.paths[currentPath].events[currentEvent].content
                       .type === 2 &&
                     apiData.paths[currentPath].events[
                       currentEvent
-                    ].content.form.map((input) => (
+                    ].content.form.map((input:Form) => (
                       <div key={input.key}>
                         <div
-                          className="MuiFormControl-root MuiTextField-root textFeild MuiFormControl-marginNormal"
+                          className="MuiTextField-root textFeild"
                           // style="margin: 8px; color: rgb(255, 255, 255); height: auto; min-width: 280px;"
                         >
-                          <div className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiInputBase-formControl">
+                          <div>
                             <input
                               type={input.type}
                               name={input.key}
@@ -207,52 +257,60 @@ export default function UserSubject(props) {
                 {apiData &&
                   apiData.paths[currentPath].events[
                     currentEvent
-                  ].content.actions.map((action) => (
+                  ].content.actions.map((action:Action) => (
                     <div key={action.end}>
                       {action.link ? (
-                        <a
-                          href={`${action.link}`}
-                          type="button"
-                          className="MuiButtonBase-root MuiButton-root MuiButton-contained action-button false MuiButton-containedSizeLarge MuiButton-sizeLarge"
-                          target="_PARENT"
-                          tabIndex="0"
-                          style={{
-                            color:
-                              apiData.paths[currentPath].events[currentEvent]
-                                .content.type === 0
-                                ? apiColors.main
-                                : apiColors.background,
-                            backgroundColor:
-                              apiData.paths[currentPath].events[currentEvent]
-                                .content.type === 0
-                                ? apiColors.background
-                                : apiColors.main,
-                            textDecorationLine: "none",
-                          }}
-                        >
-                          <span className="MuiButton-label">
+                        // <a
+                        //   href={`${action.link}`}
+                        //   type="button"
+                        //   className="action-button"
+                        //   target="_PARENT"
+                       
+                        //   tabIndex={0}
+                        //   style={{
+                        //     color:apiColors.main,
+                              
+                        //     backgroundColor:
+                        //       apiData.colors.buttonBackground
+                        //         ? apiColors.buttonBackground
+                        //         : apiColors.background,
+                        //   }}
+                        // >
+                          <button
+                            tabIndex={0}
+                            className="action-button"
+                            onClick={(e):void=>{
+                              e.preventDefault();
+                              window.open(`${action.link}`,'_parent');
+                              }}
+                            style={{
+                              color:apiColors.main,
+                                
+                              backgroundColor:
+                                apiData.colors.buttonBackground
+                                  ? apiColors.buttonBackground
+                                  : apiColors.background,
+                            }}
+                          >
+                          
+                          <span>
                             {action.label}
                           </span>
-                        </a>
+                          </button>
                       ) : (
                         <button
-                          tabIndex="0"
-                          className="MuiButtonBase-root MuiButton-root MuiButton-contained action-button false MuiButton-containedSizeLarge MuiButton-sizeLarge"
+                          tabIndex={0}
+                          className="action-button"
                           onClick={(event) => toNextSlide(event)}
                           style={{
-                            color:
-                              apiData.paths[currentPath].events[currentEvent]
-                                .content.type === 0
-                                ? apiColors.main
-                                : apiColors.background,
+                            color:apiColors.main,
                             backgroundColor:
-                              apiData.paths[currentPath].events[currentEvent]
-                                .content.type === 0
-                                ? apiColors.background
-                                : apiColors.main,
+                              apiData.colors.buttonBackground
+                                ? apiColors.buttonBackground
+                                : apiColors.background
                           }}
                         >
-                          <span className="MuiButton-label" id={actionNumber++}>
+                          <span id={String(actionNumber++)}>
                             {action.label}
                           </span>
                         </button>
@@ -262,28 +320,14 @@ export default function UserSubject(props) {
               </div>
             </form>
 
-            {/* <div className="actions-container">
-            {apiData &&
-        apiData.paths[currentPath].events[currentEvent].content.actions.map((action) => (
-          <button
-            className="MuiButtonBase-root MuiButton-root MuiButton-text action-button MuiButton-textSizeLarge MuiButton-sizeLarge"
-            tabIndex="0"
-            type="button"
-            id={actionNumber++}
-            key={action.end}
-            style={{backgroundColor:apiColors.background,color:apiColors.main}}
-            onClick={(event) => toNextSlide(event)}
-          >
-            <span className="MuiButton-label">
-              {action.label}
-            </span>
-            <span className="MuiTouchRipple-root"></span>
-          </button>
-        ))}
-            </div> */}
           </div>
         </div>
       </div>
+
+      <br/><br/><br/><br/><br/><br/>
+      <iframe src="http://localhost:3000/01849380-cbad-442e-96bb-a5527709529b" title="yoni" width="500" height="450"></iframe>
+
+
     </div>
   );
 }
