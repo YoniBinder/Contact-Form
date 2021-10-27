@@ -73,26 +73,45 @@ export default function UserApp(props:FormComponentProps) {
   let [apiColors, setApiColors] = useState<Colors>(defaultColors);
 
   let history = useHistory();
-  let actionNumber:number = 0;
+  let actionNumber:number=0;
 
   useEffect(():void => {
+    function findFirstEvent(data:ApiData){
+        for (let i = 0; i < data.paths.length; i++)
+        for(let j=0;j<data.paths[i].events.length;j++){
+            if (
+                typeof data.paths[i].events[j].dependencies[0].availability
+                  .afterEvents ==='undefined'
+              ) {
+                setCurrentPath(i);
+                setCurrentEvent(j);
+                return;
+              }
+        }
+    }
     onSnapshot(doc(db, "planz", props.match.params.id), (doc:any) => {
       if (doc.exists()) {
-        setApiData(doc.data());
         setApiColors({
           background: "#ffffff",
-          buttons: "#d40000",
+          buttonBackground: "#d40000",
           ...doc.data().colors,
         });
+        setApiData(doc.data());
+        findFirstEvent(doc.data())
       } else history.push(`${props.match.params.id}/Registration`);
+   
     });
+    
 
-  }, [history, props.match.params.id, apiData]);
+  }, [history, props.match.params.id]);
+
+
+  
 
   function goToPath(action:string) {
+    
     let nextPath = currentPath;
     let nextEvent = 1;
-
     for (let i = 0; i < apiData!.paths.length; i++) {
       if (
         apiData!.paths[currentPath].events[currentEvent]._id ===
@@ -114,12 +133,13 @@ export default function UserApp(props:FormComponentProps) {
 
   function goToNextEvent(action:string) {
     let nextEvent = currentEvent + 1;
+   
     if (
       typeof apiData!.paths[currentPath].events[nextEvent].dependencies[0]
         .availability.eventEndIdx === "undefined"
     )
       setCurrentEvent(nextEvent);
-
+ 
     while (true) {
       for (
         let i = 0;
@@ -143,7 +163,7 @@ export default function UserApp(props:FormComponentProps) {
     }
   }
 
-  function checkIfFirstEvent() {
+  function checkifOtherPath() {
     if (
       typeof apiData!.paths[currentPath].events[currentEvent].dependencies[0]
         .availability.afterEvents === "undefined"
@@ -161,12 +181,11 @@ export default function UserApp(props:FormComponentProps) {
   function toNextSlide(event:React.MouseEvent<HTMLButtonElement>):void {
     event.preventDefault();
     let action = (event.target as HTMLButtonElement).id;
-
+    
     if (checkIfForm()) setCurrentEvent(currentEvent + 1);
-    else if (checkIfFirstEvent()) goToPath(action);
+    else if (checkifOtherPath()) goToPath(action);
     else goToNextEvent(action);
   }
-
   return (
     <div>
       <Helmet>
@@ -243,7 +262,7 @@ export default function UserApp(props:FormComponentProps) {
                               style={{ paddingLeft: 8 }}
                             >
                               <legend className="jss24" style={{ width: 0.01 }}>
-                                <span>​</span>
+                              
                               </legend>
                             </fieldset>
                           </div>
@@ -258,7 +277,7 @@ export default function UserApp(props:FormComponentProps) {
                   apiData.paths[currentPath].events[
                     currentEvent
                   ].content.actions.map((action:Action) => (
-                    <div key={action.end}>
+                    <div key={action.label}>
                       {action.link ? (
                           <button
                             tabIndex={0}
@@ -277,13 +296,14 @@ export default function UserApp(props:FormComponentProps) {
                             }}
                           >
                           
-                          <span>
+                          {/* <span> */}
                             {action.label}
-                          </span>
+                          {/* </span> */}
                           </button>
                       ) : (
                         <button
                           tabIndex={0}
+                          id={String(actionNumber++)}
                           className="action-button"
                           onClick={(event) => toNextSlide(event)}
                           style={{
@@ -294,9 +314,9 @@ export default function UserApp(props:FormComponentProps) {
                                 : apiColors.background
                           }}
                         >
-                          <span id={String(actionNumber++)}>
+                          {/* <span id={String(actionNumber++)}> */}
                             {action.label}
-                          </span>
+                          {/* </span> */}
                         </button>
                       )}
                     </div>
