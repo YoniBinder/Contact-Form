@@ -3,293 +3,32 @@
 
 .event-modal {
     border-radius: 40px !important;
-    text-align: center;
-    // display: block;
-    // margin:auto;
     position: absolute;
+    padding: 16px 16px;
     top: 50%;
     left:50%;
     transform: translate(-50%, -50%);
-    .MuiBackdrop-root {
-        background-color: rgba(0, 0, 0, 0.75);
-    }
-    div {
-        .MuiPaper-rounded {
-            overflow-x: hidden;
-        }
-        .MuiPaper-root {
-            width: 100%;
-            
-            @include phone {
-                margin: 12px !important;
-                width: auto;
-            }
-            @include tablet {
-                margin: 12px !important;
-                width: auto;
-            }
-        }
-    }
-    .dialog-heading-cont.rtl-cont {
-        justify-content: flex-start;
-        @include phone {
-            justify-content: flex-start;
-        }
-        @include tablet {
-            justify-content: flex-start;
-        }
-    }
-    .dialog-heading-cont.ltr-cont {
-        justify-content: flex-start;
-    }
-
-    .dialog-heading-cont {
-        position: relative;
-        width: 100%;
-        display: flex;
-        margin-top: 20px;
-        @include phone {
-            margin-top: 35px;
-            margin-bottom: 15px;
-        }
-        @include tablet {
-            margin-top: 35px;
-            margin-bottom: 15px;
-        }
-        .dialog-heading.rtl-heading {
-            justify-content: flex-end;
-            border-top-left-radius: 40px;
-            text-align: center !important;
-            border-bottom-left-radius: 40px;
-            border-top-right-radius: 0px !important;
-            border-bottom-right-radius: 0px !important;
-            @include phone {
-                justify-content: flex-start;
-                text-align: center !important;
-                border-top-left-radius: 40px;
-                border-bottom-left-radius: 40px;
-                border-top-right-radius: 0px !important;
-                border-bottom-right-radius: 0px !important;
-            }
-            @include tablet {
-                justify-content: flex-start;
-                text-align: right !important;
-                border-top-left-radius: 40px;
-                border-bottom-left-radius: 40px;
-                border-top-right-radius: 0px !important;
-                border-bottom-right-radius: 0px !important;
-            }
-        }
-        .dialog-heading.ltr-heading {
-            justify-content: flex-start;
-        }
-        .dialog-heading {
-            background-color: $primary-color-web;
-            color: white;
-            position: relative;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            width: 70%;
-            height: fit-content;
-            border-top-right-radius: 40px;
-            border-bottom-right-radius: 40px;
-            @include phone {
-                //background-color: $primary-color-phone;
-                width: 62%;
-            }
-            @include tablet {
-                //background-color: $primary-color-phone;
-                width: 65%;
-            }
-            .plan-name {
-                font-size: 20px;
-                font-weight: 300;
-                padding: 5px 14px;
-                margin: 0;
-                width: 100% !important;
-                @include phone {
-                    font-size: 14px;
-                }
-                @include tablet {
-                    font-size: 14px;
-                }
-            }
-        }
-        .rtl-logo-container {
-            left: -35px;
-            @include phone {
-                left: -25px;
-            }
-            @include tablet {
-                left: -25px;
-            }
-        }
-        .ltr-logo-container {
-            right: -35px;
-            @include phone {
-                right: -25px;
-            }
-            @include tablet {
-                right: -25px;
-            }
-        }
-        .logo-container {
-            position: absolute;
-            top: -45px;
-            background: $primary-color-web;
-            height: 160px;
-            width: 160px;
-            border-radius: 50%;
-            @include phone {
-                //background: $primary-color-phone;
-                height: 140px;
-                width: 140px;
-                top: -65px;
-            }
-            @include tablet {
-                //background: $primary-color-phone;
-                height: 140px;
-                width: 140px;
-                top: -65px;
-            }
-
-            .organization-logo {
-                width: 100px;
-                height: 100px;
-                border-radius: 50%;
-                align-self: center;
-                position: absolute;
-                left: 9%;
-                bottom: 13%;
-                border: 3px solid #fff;
-                background: #ffffff;
-                @include phone {
-                    width: 85px;
-                    height: 85px;
-                    left: 12%;
-                    bottom: 10%;
-                }
-                @include tablet {
-                    width: 85px;
-                    height: 85px;
-                    left: 12%;
-                    bottom: 10%;
-                }
-            }
-
-            .rtl-organization-logo {
-                left: 25% !important;
-                @include phone {
-                    left: 22% !important;
-                }
-                @include tablet {
-                    left: 22% !important;
-                }
-            }
-        }
-
-        
-
-        .close-button {
-            color: white;
-            padding: 14px;
-            position: absolute !important;
-            top: 0;
-            right: 0;
-            @include phone {
-                top: -45px;
-                right: 5px;
-            }
-            @include tablet {
-                top: -45px;
-                right: 5px;
-            }
-            .close-btn {
-                color: $primary-color-web;
-                @include phone {
-                    //color: $primary-color-phone;
-                }
-            }
-        }
-    }
-    .non-sales-event-name {
-        background-color: $primary-color;
-    }
-
-    .plan-name-container {
-        color: white;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        @include phone {
-            //background-color: $primary-color-phone;
-        }
-
-        .plan-name {
-            font-size: 20px;
-            font-weight: 600;
-            padding: 0 14px;
-        }
-
-        .organization-logo {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            align-self: center;
-            margin: 6px 10px;
-            border: 3px solid #fff;
-        }
-
-        
-
-        .close-button {
-            color: white;
-            padding: 14px;
-        }
-
-        svg {
-            cursor: pointer;
-
-            &:hover {
-                opacity: 0.9;
-            }
-        }
-    }
-
-    .event-title {
-        padding: 8px 16px;
-        color: $primary-color;
-        border: 1px solid $primary-color;
-        font-size: 20px;
-        font-weight: 600;
-    }
     .heading {
         color: $primary-color-web;
         font-size: 1.5rem;
         text-shadow: 0px 1px rgba(0, 0, 0, 0.5);
-        @include phone {
-            //color: $primary-color-phone;
-        }
+        font-weight:bold;
     }
 
     .content {
         color: grey;
-        padding: 16px 16px;
+       
         width: 40vw;
         max-width: 560px;
-        text-align: center;
         color: #000000;
         display: flex;
         flex-direction: column;
         margin: 0 auto;
         p {
             align-self: flex-start;
-            text-align: center;
         }
 
         @include phone {
-            // text-align: left;
             margin-top: 0px;
             width: 85vw;
         }
@@ -309,87 +48,29 @@
             @include phone {
                 width: 100%;
                 font-size: 30px;
-                // margin: 10px 10px;
                 padding: 0px 0px 0px 0px;
             }
             @include tablet {
                 width: 85%;
                 font-size: 30px;
                 
-                // margin: 20px 0px 10px 5px;
             }
         }
 
         .content-message {
             align-self: flex-start;
-            text-align: center !important;
-            padding-left: 10px;
-            margin-top: 8px;
-            margin-right:auto;
-            margin-left:auto;
+            text-align: right !important;
+            padding-top:12px;
+            font-weight: bold;
             @include phone{
                 align-self: flex-start;
                 padding-left: 10px;
                 margin-top: 0px;
             }
         }
-        .content-message.rtl-content-message{
-            text-align: center !important;
-            padding-right: 10px;
-            @include phone{
-                padding-right: 10px;
-            }
-        }
 
-        .rtl-content-message {
-            .text-inline {
-                width: 100% !important;
-                display: initial !important;
-                @include phone {
-                    display: initial !important;
-                }
-            }
-        }
-
-        .text-inline {
-            display: inline;
-            width: 60%;
-            white-space: pre-line;
-            padding-right: 5px;
-            @include phone {
-                display: initial;
-                width: 90%;
-                padding-right: 2px;
-            }
-            @include tablet {
-                display: initial;
-                width: 85%;
-                padding-right: 2px;
-            }
-        }
-
-        .scheduled-to {
-            display: flex;
-            justify-content: flex-start;
-
-            p {
-                color: #373737;
-                font-style: oblique;
-                font-size: 0.9em;
-            }
-
-            .text-inline {
-                display: inline;
-            }
-
-            svg {
-                color: #373737;
-                margin: 0 8px;
-            }
-        }
     }
     .rtl-heading {
-        // padding-right: 10px;
         @include phone{
             margin-top: 0px !important;
         }
@@ -418,187 +99,40 @@
        
     }
 
-    .non-sale-content {
-        p{  
-        text-align: left !important;        
-        width: 100% !important;
+
+    
+    .form-cont {
+        div{
+            input{
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+        @include phone {
+            display: flex;
+            flex-direction: column;
+        }
+        @include tablet {
+            display: flex;
+            flex-direction: column;
         }
     }
 
-    .rtl-content {
-        p{  
-            text-align: right !important;
-        }
-        a {
-            text-align: right;
-        }
-    }
-
-    .sale-rtl-content{
-        align-items: flex-start !important;
-        p {
-            text-align: right !important;
-        }
-    }
 
     .actions-container {
-        padding: 8px 16px 10px;
-        min-width: 500px;
-        @include phone {
-            display: flex;
-            justify-content: center;
-            min-width: auto;
-        }
-        @include tablet {
-            display: flex;
-            justify-content: center;
-            min-width: auto;
-        }
-        // .action-button[type='submit'] {
-        //     // border: 1px solid $primary-color-web;
-        //     background-color: $primary-color-web;
-        //     color: #ffffff;
-        //     grid-area: 1/3/3/4;
-        // }
-        // .action-button[type='button'] {
-            // border: 3px solid rgba(114,186,198,0.4);
-            // background-color: #ffffff;
-            // color: $primary-color-web;
-            // text-decoration: none;
-        // }
-        
-        .action-button {
-            justify-self: stretch;
-            margin: 0 10%;
-            border-radius: 5px;
-            text-transform: initial;
-            padding: 5px 10px;
-            font-weight: 400;
-            @include phone {
-                font-size: 14px;
-                margin: 0 6px;
-                border-radius: 8px;
-            }
-            @include tablet {
-                font-size: 14px;
-                margin: 0 6px;
-                border-radius: 8px;
-            }
-        }
-    }
-
-    .textFeild {
-        // width: 60%;
-        height: 65px;
-        @include phone {
-            width: 100%;
-            margin: 5px 0px !important;
-        }
-        @include tablet {
-            width: 100%;
-            margin: 5px 0px !important;
-        }
-        .MuiOutlinedInput-multiline {
-            padding: 0 !important;
-            @include phone {
-                padding: 0px !important
-            }
-            @include tablet {
-                padding: 0px !important
-            }
-            textarea {
-                padding: 15px 0px 0px 0px !important;
-            }
-        }
-        div {
-            border-radius: 8px;
-            // overflow: hidden;
-            @include phone {
-                border-radius: 10px;
-                height: fit-content;
-            }
-            @include tablet {
-                border-radius: 10px;
-                height: fit-content;
-            }
-            input {
-                @include phone {
-                    height: 43px;
-                }
-                @include tablet {
-                    height: 43px;
-                }
-            }
-            fieldset {
-                @include phone {
-                    border-radius: 10px;
-                }
-                @include tablet {
-                    border-radius: 10px;
-                }
-            }
-        }
-    }
-    .form-cont {
-        @include phone {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        @include tablet {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .MuiTextField-root {
-            @include tablet {
-                min-width: 0px;
-            }
-            @include phone {
-                min-width: 0px;
-            }
-        }
-    }
-
-    .rtl-form {
-        .MuiInputLabel-formControl {
-            left: unset !important;
-            top: unset !important;
-            right: 8px !important;
-        }
-
-        // .MuiInputLabel-root:not(:first-child) {
-        //     .MuiInputLabel-formControl {
-        //         right: 8px !important;
-        //     }
-        // }
-    }
-    .MuiInputBase-input{
-        color: rgb(255, 255, 255); 
-        font-weight: 600;
-         text-align: center;
-          z-index: 2; 
-          height: 45px; 
-          padding: 0px; 
-          
-    }
-    .actions-non-sales-container {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         padding: 8px 16px 20px;
-
-        @include phone {
-            display: flex;
-            justify-content: center;
-        }
-
+        display: flex;
+        justify-content: center;
+    
         .action-button {
-            border: 1px solid $primary-color;
-            color: $primary-color;
+  
             justify-self: stretch;
+            padding:5px 30px;
             margin: 0 10%;
-            border-radius: 0;
-
+            border-radius: 5px;
+            font-weight: bold;
             @include phone {
                 font-size: 14px;
                 margin: 0 6px;

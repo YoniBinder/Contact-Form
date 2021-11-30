@@ -222,18 +222,18 @@ export default function UserApp(props:FormComponentProps) {
               >{apiData &&
                   apiData.paths[currentPath].events[currentEvent].title}
               </p>
-              <span className="content-message rtl-content-message" style={{color:apiColors.description}}>
-                <p className="MuiTypography-root text-inline MuiTypography-body1">
+         
+                <p className="content-message rtl-content-message" style={{color:apiColors.description}}>
                 { apiData && apiData.paths[currentPath].events[currentEvent].content.message}
                 </p>
-              </span>
+        
             </div>
 
             <form className="jss21">
             
               <div className="jss22">
               
-                <div className="form-cont rtl-form">
+                <div className="form-cont">
                 
                   {apiData &&
                     apiData.paths[currentPath].events[currentEvent].content
@@ -242,31 +242,17 @@ export default function UserApp(props:FormComponentProps) {
                       currentEvent
                     ].content.form.map((input:Form) => (
                       <div key={input.key}>
-                        <div
-                          className="MuiTextField-root textFeild"
-                          // style="margin: 8px; color: rgb(255, 255, 255); height: auto; min-width: 280px;"
-                        >
-                          <div>
+                       
+                          
+                            <label htmlFor={input.key}>{input.key} {input.required&&'*'}</label><br/>
                             <input
                               type={input.type}
-                              name={input.key}
-                              placeholder={input.key}
+                              id={input.key}
                               required={input.required}
                               aria-invalid="false"
-                              className="MuiInputBase-input MuiOutlinedInput-input"
-                              style={{ backgroundColor: apiColors.main }}
-                            />
-                            <fieldset
-                              aria-hidden="true"
-                              className="jss23 MuiOutlinedInput-notchedOutline"
-                              style={{ paddingLeft: 8 }}
-                            >
-                              <legend className="jss24" style={{ width: 0.01 }}>
-                              
-                              </legend>
-                            </fieldset>
-                          </div>
-                        </div>
+                            />  
+                         
+                        
                       </div>
                     ))}
                 </div>
@@ -296,9 +282,9 @@ export default function UserApp(props:FormComponentProps) {
                             }}
                           >
                           
-                          {/* <span> */}
+                        
                             {action.label}
-                          {/* </span> */}
+                          
                           </button>
                       ) : (
                         <button
@@ -307,16 +293,16 @@ export default function UserApp(props:FormComponentProps) {
                           className="action-button"
                           onClick={(event) => toNextSlide(event)}
                           style={{
-                            color:apiColors.main,
+                            color:apiColors.title,
                             backgroundColor:
                               apiData.colors.buttonBackground
                                 ? apiColors.buttonBackground
                                 : apiColors.background
                           }}
                         >
-                          {/* <span id={String(actionNumber++)}> */}
+                    
                             {action.label}
-                          {/* </span> */}
+                       
                         </button>
                       )}
                     </div>
