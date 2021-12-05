@@ -127,10 +127,9 @@
         justify-content: center;
     
         .action-button {
-  
+            margin:0 5px;
             justify-self: stretch;
             padding:5px 30px;
-            margin: 0 10%;
             border-radius: 5px;
             font-weight: bold;
             @include phone {
@@ -138,5 +137,9 @@
                 margin: 0 6px;
             }
         }
+    }
+    .error-message{
+        text-align: center;
+        color:red
     }
 }
