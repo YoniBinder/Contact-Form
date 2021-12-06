@@ -110,7 +110,7 @@ export default function UserApp(props:FormComponentProps) {
 
   
 
-  function goToPath(action:string) {
+  function goToPath(action:number) {
     
     let nextPath = currentPath;
     let nextEvent = 1;
@@ -119,7 +119,7 @@ export default function UserApp(props:FormComponentProps) {
         apiData!.paths[currentPath].events[currentEvent]._id ===
           apiData!.paths[nextPath].events[nextEvent].dependencies[0].availability
             .afterEvents[0] &&
-        Number(action) ===
+        action ===
           apiData!.paths[nextPath].events[nextEvent].dependencies[0].availability
             .eventEndIdx
       ) {
@@ -133,7 +133,7 @@ export default function UserApp(props:FormComponentProps) {
     }
   }
 
-  function goToNextEvent(action:string) {
+  function goToNextEvent(action:number) {
     let nextEvent = currentEvent + 1;
    
     if (
@@ -143,7 +143,6 @@ export default function UserApp(props:FormComponentProps) {
       setCurrentEvent(nextEvent);
       return
     }
-
     while (true) {
       for (
         let i = 0;
@@ -154,7 +153,7 @@ export default function UserApp(props:FormComponentProps) {
           apiData!.paths[currentPath].events[currentEvent]._id ===
             apiData!.paths[currentPath].events[nextEvent].dependencies[i]
               .availability.afterEvents[0] &&
-          Number(action) ===
+          action ===
             apiData!.paths[currentPath].events[nextEvent].dependencies[i]
               .availability.eventEndIdx
         ) {
@@ -167,10 +166,14 @@ export default function UserApp(props:FormComponentProps) {
     }
   }
 
-  function checkIfOtherPath() {
+  function checkIfOtherPath(action:number) {
 
     if(apiData!.paths[currentPath].events[currentEvent]._id===
-      apiData!.paths[currentPath].events[currentEvent+1].dependencies[0].availability.afterEvents[0])
+      apiData!.paths[currentPath].events[currentEvent+1].dependencies[0].availability.afterEvents[0]
+      &&action ===
+      apiData!.paths[currentPath].events[currentEvent+1].dependencies[0]
+        .availability.eventEndIdx
+      )
         return false
 
     for(let i=0;i<apiData!.paths.length;i++){
@@ -212,7 +215,7 @@ function clearAll(){
 
   function toNextSlide(event:React.MouseEvent<HTMLButtonElement>):void {
     event.preventDefault()
-    let action = (event.target as HTMLButtonElement).id;
+    let action = Number((event.target as HTMLButtonElement).id);
     if (checkIfForm()){
       let message:string=checkValidation()
         if(message==="pass") {
@@ -223,7 +226,7 @@ function clearAll(){
         return
       }
     } 
-    else if (checkIfOtherPath()){
+    else if (checkIfOtherPath(action)){
       goToPath(action);
     }
     
