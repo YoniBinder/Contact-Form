@@ -108,84 +108,61 @@ export default function UserApp(props:FormComponentProps) {
   }, [history, props.match.params.id]);
 
 
-  
-
-  function goToPath(action:number) {
-    
-    let nextPath = currentPath;
-    let nextEvent = 1;
-    for (let i = 0; i < apiData!.paths.length; i++) {
-      if (
-        apiData!.paths[currentPath].events[currentEvent]._id ===
-          apiData!.paths[nextPath].events[nextEvent].dependencies[0].availability
-            .afterEvents[0] &&
-        action ===
-          apiData!.paths[nextPath].events[nextEvent].dependencies[0].availability
-            .eventEndIdx
-      ) {
-        setCurrentPath(nextPath);
-        setCurrentEvent(nextEvent);
-        actionNumber = 0;
-        return;
-      }
-      nextPath++;
-      nextEvent = 0;
-    }
-  }
-
   function goToNextEvent(action:number) {
     let nextEvent = currentEvent + 1;
-   
-    if (
-      typeof apiData!.paths[currentPath].events[nextEvent].dependencies[0]
-        .availability.eventEndIdx === "undefined"
-    ){
-      setCurrentEvent(nextEvent);
-      return
-    }
-    while (true) {
+    //check if the next event is on the same path
+    for (
+      let i = nextEvent;
+      i < apiData!.paths[currentPath].events.length;
+      i++
+    ) {
+      if(apiData!.paths[currentPath].events[i].dependencies)
       for (
-        let i = 0;
-        i < apiData!.paths[currentPath].events[nextEvent].dependencies.length;
-        i++
-      ) {
-        if (
+        let k = 0;
+        k < apiData!.paths[currentPath].events[nextEvent].dependencies.length;
+        k++
+      )   
+      if (
           apiData!.paths[currentPath].events[currentEvent]._id ===
-            apiData!.paths[currentPath].events[nextEvent].dependencies[i]
+            apiData!.paths[currentPath].events[i].dependencies[k]
               .availability.afterEvents[0] &&
           action ===
-            apiData!.paths[currentPath].events[nextEvent].dependencies[i]
+            apiData!.paths[currentPath].events[i].dependencies[k]
               .availability.eventEndIdx
         ) {
-          setCurrentEvent(nextEvent);
-          actionNumber = 0;
+          setCurrentEvent(i);
           return;
         }
-      }
-      nextEvent++;
     }
-  }
+  
 
-  function checkIfOtherPath(action:number) {
+    //check if the next event is on other path
+    console.log(apiData!.paths[currentPath].events[currentEvent]._id)
 
-    if(apiData!.paths[currentPath].events[currentEvent]._id===
-      apiData!.paths[currentPath].events[currentEvent+1].dependencies[0].availability.afterEvents[0]
-      &&action ===
-      apiData!.paths[currentPath].events[currentEvent+1].dependencies[0]
-        .availability.eventEndIdx
-      )
-        return false
-
-    for(let i=0;i<apiData!.paths.length;i++){
-      if(apiData!.paths[i].events[0].dependencies[0].availability.afterEvents)
-        if(apiData!.paths[currentPath].events[currentEvent]._id===
-          apiData!.paths[i].events[0].dependencies[0].availability.afterEvents[0]
-            
-        )
-          return true;
-    }
+    for (let i = 0; i < apiData!.paths.length; i++)
+      for(let j=0;j<apiData!.paths[i].events.length;j++)
+        if(apiData!.paths[i].events[j].dependencies)
+          for (
+                let k = 0;
+                k < apiData!.paths[i].events[j].dependencies.length;
+                k++
+              ) {
+                if(apiData!.paths[i].events[j].dependencies[k].availability.afterEvents){
+                  if(apiData!.paths[currentPath].events[currentEvent]._id===
+                    apiData!.paths[i].events[j].dependencies[k].availability.afterEvents[0]
+                    &&action ===
+                    apiData!.paths[i].events[j].dependencies[k]
+                      .availability.eventEndIdx
+                  )
+                    {
+                        setCurrentPath(i);
+                        setCurrentEvent(j);
+                      }
+                }
+              }
     
-    return false;
+    
+    
   }
 
   function checkIfForm() {
@@ -226,13 +203,8 @@ function clearAll(){
         return
       }
     } 
-    else if (checkIfOtherPath(action)){
-      goToPath(action);
-    }
-    
-    else {
-      goToNextEvent(action);
-    }
+    else
+      goToNextEvent(action)
     clearAll()
   }
   return (
@@ -259,7 +231,8 @@ function clearAll(){
               </p>
          
                 <p className="content-message rtl-content-message" style={{color:apiColors.description}}>
-                { apiData && apiData.paths[currentPath].events[currentEvent].content.message}
+                { (apiData && apiData.paths[currentPath].events[currentEvent].content.message!=='.')
+                && apiData.paths[currentPath].events[currentEvent].content.message}
                 </p>
         
             </div>
