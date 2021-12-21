@@ -1,7 +1,8 @@
+import "./UserApp.scss";
 import { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
-import "./UserApp.scss";
 import { db } from "../../config/firebase";
+import { Helmet } from "react-helmet";
 import {
   onSnapshot,
   doc,
@@ -10,59 +11,16 @@ import {
   collection,
   addDoc,
 } from "@firebase/firestore";
-import { Helmet } from "react-helmet";
 
-interface FormComponentProps {
-  match: Match;
-}
-type Params = {
-  id: string;
-};
-type Match = {
-  params: Params;
-};
-type Colors = {
-  main: string;
-  title: string;
-  background?: string;
-  description: string;
-  buttons?: string;
-  buttonBackground?: string;
-};
-type Form = {
-  key: string;
-  type: string;
-  required: boolean;
-};
-type Action = {
-  label: string;
-  type: number;
-  end?: string;
-  link?: string;
-};
 
-type Content = {
-  actions: Array<Action>;
-  form: Array<Form>;
-  type: number;
-  message: string;
-};
-type Availability = {
-  eventEndIdx: number;
-  afterEvents: Array<string>;
-};
-type Events = {
-  _id: string;
-  content: Content;
-  dependencies: Array<{ availability: Availability }>;
-  title: string;
-};
-type ApiData = {
-  paths: Array<{ events: Array<Events>; _id: string }>;
-  colors: Colors;
-  title: string;
-  _id: string;
-};
+import {
+  FormComponentProps,
+  Colors,
+  Form,
+  Action,
+  ApiData
+} from '../../Models/model'
+
 
 export default function UserApp(props: FormComponentProps) {
   const defaultColors = {
@@ -74,12 +32,12 @@ export default function UserApp(props: FormComponentProps) {
   };
 
   const [apiData, setApiData] = useState<ApiData | null>(null);
-  let [currentPath, setCurrentPath] = useState<number>(0);
-  let [currentEvent, setCurrentEvent] = useState<number>(0);
-  let [apiColors, setApiColors] = useState<Colors>(defaultColors);
-  let [errorMessge, setErrorMessage] = useState<string>("");
-  let [document, setDocument] = useState<string>("");
-  let [data, setData] = useState<Object>({});
+  const [currentPath, setCurrentPath] = useState<number>(0);
+  const [currentEvent, setCurrentEvent] = useState<number>(0);
+  const [apiColors, setApiColors] = useState<Colors>(defaultColors);
+  const [errorMessge, setErrorMessage] = useState<string>("");
+  const [document, setDocument] = useState<string>("");
+  const [data, setData] = useState<Object>({});
   let refs = useRef<any>([]);
 
   let history = useHistory();
@@ -130,7 +88,6 @@ export default function UserApp(props: FormComponentProps) {
 
   function goToNextEvent(action: number) {
     let nextEvent = currentEvent + 1;
-    //check if the next event is on the same path
     for (
       let i = nextEvent;
       i < apiData!.paths[currentPath].events.length;

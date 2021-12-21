@@ -1,145 +1,136 @@
-@import './../../vars.scss';
-
+@import "./../../vars.scss";
 
 .event-modal {
-    border-radius: 40px !important;
-    position: absolute;
-    padding: 16px 16px;
-    top: 50%;
-    left:50%;
-    transform: translate(-50%, -50%);
+  border-radius: 40px !important;
+  position: absolute;
+  padding: 16px 16px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  .heading {
+    color: $primary-color-web;
+    font-size: 1.5rem;
+    text-shadow: 0px 1px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+  }
+
+  .content {
+    color: grey;
+    width: 40vw;
+    max-width: 560px;
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    p {
+      align-self: flex-start;
+    }
+
+    @include phone {
+      margin-top: 0px;
+      width: 85vw;
+    }
+    @include tablet {
+      margin-top: 0px;
+      width: 85vw;
+    }
+    a {
+      width: 100%;
+    }
     .heading {
-        color: $primary-color-web;
-        font-size: 1.5rem;
-        text-shadow: 0px 1px rgba(0, 0, 0, 0.5);
-        font-weight:bold;
+      color: $primary-color-web;
+      font-size: 36px;
+      width: 75%;
+      display: block !important;
+      margin: 0 auto;
+      @include phone {
+        width: 100%;
+        font-size: 30px;
+        padding: 0px 0px 0px 0px;
+      }
+      @include tablet {
+        width: 85%;
+        font-size: 30px;
+      }
     }
 
-    .content {
-        color: grey;
-       
-        width: 40vw;
-        max-width: 560px;
-        color: #000000;
-        display: flex;
-        flex-direction: column;
-        margin: 0 auto;
-        p {
-            align-self: flex-start;
-        }
-
-        @include phone {
-            margin-top: 0px;
-            width: 85vw;
-        }
-        @include tablet {
-            margin-top: 0px;
-            width: 85vw;
-        }
-        a {
-            width: 100%;
-        }
-        .heading {
-            color: $primary-color-web;
-            font-size: 36px;
-            width: 75%;
-            display: block !important;
-            margin:0 auto;
-            @include phone {
-                width: 100%;
-                font-size: 30px;
-                padding: 0px 0px 0px 0px;
-            }
-            @include tablet {
-                width: 85%;
-                font-size: 30px;
-                
-            }
-        }
-
-        .content-message {
-            align-self: flex-start;
-            text-align: right !important;
-            padding-top:12px;
-            font-weight: bold;
-            @include phone{
-                align-self: flex-start;
-                padding-left: 10px;
-                margin-top: 0px;
-            }
-        }
-
+    .content-message {
+      align-self: flex-start;
+      text-align: right !important;
+      padding-top: 12px;
+      font-weight: bold;
+      @include phone {
+        align-self: flex-start;
+        padding-left: 10px;
+        margin-top: 0px;
+      }
     }
-    .rtl-heading {
-        @include phone{
-            margin-top: 0px !important;
-        }
-        @include tablet{
-            margin-top: 0px !important;
-        }
-        p {
-            width: 80% !important;
-            align-self: flex-start;
-            padding-right: 0px !important;
-            text-align: center !important;
-            @include phone{
-                width: 100% !important;
-                align-self: flex-start;
-                text-align: center !important;
-                padding-right: 0px !important;
-            }
-            @include tablet{
-                width: 100% !important;
-                align-self: flex-start;
-                text-align: center !important;
-                padding-right: 0px !important;
-            }
-        }
-        
-       
+  }
+  .rtl-heading {
+    @include phone {
+      margin-top: 0px !important;
     }
-
-
-    
-    .form-cont {
-        div{
-            input{
-                width: 100%;
-                margin-bottom: 10px;
-            }
-        }
-        @include phone {
-            display: flex;
-            flex-direction: column;
-        }
-        @include tablet {
-            display: flex;
-            flex-direction: column;
-        }
+    @include tablet {
+      margin-top: 0px !important;
     }
-
-
-    .actions-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        padding: 8px 16px 20px;
-        display: flex;
-        justify-content: center;
-    
-        .action-button {
-            margin:0 5px;
-            justify-self: stretch;
-            padding:5px 30px;
-            border-radius: 5px;
-            font-weight: bold;
-            @include phone {
-                font-size: 14px;
-                margin: 0 6px;
-            }
-        }
+    p {
+      width: 80% !important;
+      align-self: flex-start;
+      padding-right: 0px !important;
+      text-align: center !important;
+      @include phone {
+        width: 100% !important;
+        align-self: flex-start;
+        text-align: center !important;
+        padding-right: 0px !important;
+      }
+      @include tablet {
+        width: 100% !important;
+        align-self: flex-start;
+        text-align: center !important;
+        padding-right: 0px !important;
+      }
     }
-    .error-message{
-        text-align: center;
-        color:red
+  }
+
+  .form-cont {
+    div {
+      input {
+        width: 100%;
+        margin-bottom: 10px;
+      }
     }
+    @include phone {
+      display: flex;
+      flex-direction: column;
+    }
+    @include tablet {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .actions-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 8px 16px 20px;
+    display: flex;
+    justify-content: center;
+
+    .action-button {
+      margin: 0 5px;
+      justify-self: stretch;
+      padding: 5px 30px;
+      border-radius: 5px;
+      font-weight: bold;
+      @include phone {
+        font-size: 14px;
+        margin: 0 6px;
+      }
+    }
+  }
+  .error-message {
+    text-align: center;
+    color: red;
+  }
 }
