@@ -87,6 +87,8 @@ export default function UserApp(props: FormComponentProps) {
   }, [history, props.match.params.id]);
 
   function goToNextEvent(action: number) {
+
+    //go to next event on the same path
     let nextEvent = currentEvent + 1;
     for (
       let i = nextEvent;
@@ -112,7 +114,7 @@ export default function UserApp(props: FormComponentProps) {
           }
     }
 
-    //check if the next event is on other path
+    //go to other path to find next event
     for (let i = 0; i < apiData!.paths.length; i++)
       for (let j = 0; j < apiData!.paths[i].events.length; j++)
         if (apiData!.paths[i].events[j].dependencies)
@@ -139,6 +141,7 @@ export default function UserApp(props: FormComponentProps) {
             }
           }
   }
+
   //check if the event is type form
   function checkIfForm() {
     if (apiData!.paths[currentPath].events[currentEvent].content.type === 2)
@@ -171,7 +174,7 @@ export default function UserApp(props: FormComponentProps) {
     refs.current = [];
     setData({});
   }
-
+  //save the event on Analytics
   async function saveEvent(event: any) {
     let eventData = {
       endWith: event.target.outerText || 'Default',
@@ -184,7 +187,7 @@ export default function UserApp(props: FormComponentProps) {
     });
   }
 
-  function changeHandler(event: any) {
+  function changeHandler(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
     setData((prev) => ({ ...prev, [name]: value }));
   }
@@ -235,9 +238,8 @@ export default function UserApp(props: FormComponentProps) {
               </p>
             </div>
 
-            <form className="jss21">
-              <div className="jss22">
-                <div className="form-cont">
+            <form>
+                <div className="inputs-container">
                   {apiData &&
                     apiData.paths[currentPath].events[currentEvent].content
                       .type === 2 &&
@@ -262,7 +264,6 @@ export default function UserApp(props: FormComponentProps) {
                       </div>
                     ))}
                 </div>
-              </div>
 
               <div className="actions-container">
                 {apiData &&
@@ -270,14 +271,15 @@ export default function UserApp(props: FormComponentProps) {
                     currentEvent
                   ].content.actions.map((action: Action) => (
                     <div key={action.label}>
-                      {action.link ? (
                         <button
                           tabIndex={0}
+                          id={action.link?String(Math.floor(Math.random() * 100)+10):String(actionNumber++)}
                           className="action-button"
-                          onClick={(e): void => {
-                            e.preventDefault();
-                            window.open(`${action.link}`, "_parent");
-                          }}
+                          onClick={action.link?
+                            (event): void => {
+                                event.preventDefault();
+                                window.open(`${action.link}`, "_parent");
+                            }:(event) => toNextSlide(event)}
                           style={{
                             color: apiColors.title,
                             backgroundColor: apiData.colors.buttonBackground
@@ -287,22 +289,6 @@ export default function UserApp(props: FormComponentProps) {
                         >
                           {action.label}
                         </button>
-                      ) : (
-                        <button
-                          tabIndex={0}
-                          id={String(actionNumber++)}
-                          className="action-button"
-                          onClick={(event) => toNextSlide(event)}
-                          style={{
-                            color: apiColors.title,
-                            backgroundColor: apiData.colors.buttonBackground
-                              ? apiColors.buttonBackground
-                              : apiColors.background,
-                          }}
-                        >
-                          {action.label}
-                        </button>
-                      )}
                     </div>
                   ))}
               </div>
